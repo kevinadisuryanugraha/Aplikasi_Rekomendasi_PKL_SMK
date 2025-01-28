@@ -1,14 +1,9 @@
 <?php
 
-$hostname = "localhost";
-$username = "root";
-$password = "";
-$database = "db_rekomendasi_pkl";
+define('HOSTNAME', 'localhost');
+define('USERNAME', 'root');
+define('PASSWORD', '');
+define('DATABASE', 'db_rekomendasi_pkl');
+define('JWT_KEY', 'Kurm4m3di4');
 
-$db = new mysqli($hostname, $username, $password, $database);
-
-if ($db->connect_error) {
-    die("koneksi gagal: " . $db->connect_error);
-} else {
-    // echo "koneksi berhasil";
-}
+$db = new mysqli(HOSTNAME, USERNAME, PASSWORD, DATABASE);

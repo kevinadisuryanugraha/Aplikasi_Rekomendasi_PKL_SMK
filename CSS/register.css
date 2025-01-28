@@ -28,8 +28,9 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="tel"],
+input[type="password"],
 select {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -39,7 +40,7 @@ select {
 button[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #28a745;
+    background-color: #007BFF;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -47,7 +48,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #218838;
+    background-color: #0056b3;
 }
 
 .error {

@@ -1,7 +1,6 @@
 <?php
 include 'functions.php';
 
-// Inisialisasi variabel error
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -9,11 +8,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $nomor_telepon = $_POST['nomor_telepon'];
     $role = $_POST['role'];
+    $password = $_POST['password'];
 
     // Validasi input apakah tidak kosong
-    if (!empty($nama_lengkap) && !empty($email) && !empty($nomor_telepon) && !empty($role)) {
-        // Panggil fungsi registerUser() dari functions.php
-        $error = tambahUser($nama_lengkap, $email, $nomor_telepon, $role);
+    if (!empty($nama_lengkap) && !empty($email) && !empty($nomor_telepon) && !empty($role) && !empty($password)) {
+        $error = tambahUser($nama_lengkap, $email, $nomor_telepon, $role, $password);
     } else {
         $error = "Semua field harus diisi.";
     }
@@ -56,8 +55,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="perusahaan">Perusahaan</option>
             </select>
 
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
             <button type="submit">Register</button>
         </form>
+
+        <p style="text-align: center;">
+            Jika Sudah mempunyai akun silahkan <a href="login.php">Login disini!</a>
+        </p>
     </div>
 
 </body>

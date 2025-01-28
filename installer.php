@@ -39,7 +39,8 @@ $sql_buat_tabel_users = "CREATE TABLE IF NOT EXISTS users (
     nama_lengkap VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     nomor_telepon VARCHAR(50) NOT NULL,
-    role ENUM('siswa', 'perusahaan') NOT NULL
+    role ENUM('siswa', 'perusahaan') NOT NULL,
+    password VARCHAR(255) NOT NULL
 )";
 $eksekusi_buat_tabel_users = $db->query($sql_buat_tabel_users);
 

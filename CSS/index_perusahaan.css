@@ -84,7 +84,7 @@ button:hover {
     background-color: #004d40;
 }
 
-a {
+.link {
     display: inline-block;
     text-decoration: none;
     background-color: #0288d1;
@@ -96,14 +96,14 @@ a {
     margin-top: 20px;
 }
 
-a:hover {
+.link:hover {
     background-color: #01579b;
 }
 
-a.logout {
+.logout {
     background-color: #d32f2f;
 }
 
-a.logout:hover {
+.logout:hover {
     background-color: #b71c1c;
 }

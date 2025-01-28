@@ -2,6 +2,12 @@
 include_once 'config.php';
 include_once 'functions.php';
 
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
 $lowongan_id = $_GET['lowongan_id'];
 
 $lowongan = getLowonganById($lowongan_id);
@@ -10,6 +16,7 @@ if (!$lowongan) {
 }
 
 $perusahaan = getPerusahaanByLowonganId($lowongan_id);
+
 ?>
 
 <!DOCTYPE html>
@@ -47,9 +54,10 @@ $perusahaan = getPerusahaanByLowonganId($lowongan_id);
             <p><strong>Jurusan:</strong> <?php echo $lowongan['jurusan']; ?></p>
             <p><strong>Jenjang Kontrak:</strong> <?php echo $lowongan['jenjang_kontrak']; ?></p>
             <p><strong>Status:</strong> <?php echo $lowongan['status'] == 'tersedia' ? 'Tersedia' : 'Ditutup'; ?></p>
+            <p><strong>Tanggal:</strong> <?php echo date('d-m-Y', strtotime($lowongan['created_at'])); ?></p>
         </section>
 
-        <a href="index_siswa.php" class="back-button">Kembali ke Dashboard</a>
+        <a href="javascript:history.back()" class="back-button">Kembali ke Dashboard</a>
     </div>
 </body>
 

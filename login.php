@@ -5,15 +5,15 @@ include 'functions.php';
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama_lengkap = $_POST['nama_lengkap'];
     $email = $_POST['email'];
+    $password = $_POST['password'];
 
     // Validasi input apakah tidak kosong
-    if (!empty($nama_lengkap) && !empty($email)) {
+    if (!empty($email) && !empty($password)) {
         // Panggil fungsi loginUser() dari functions.php
-        $error = loginUser($nama_lengkap, $email);
+        $error = loginUser($email, $password);
     } else {
-        $error = "Nama lengkap dan email harus diisi.";
+        $error = "Email dan password harus diisi.";
     }
 }
 ?>
@@ -39,11 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
 
         <form action="login.php" method="POST">
-            <label for="nama_lengkap">Nama Lengkap</label>
-            <input type="text" id="nama_lengkap" name="nama_lengkap" required>
-
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
 
             <button type="submit">Login</button>
         </form>

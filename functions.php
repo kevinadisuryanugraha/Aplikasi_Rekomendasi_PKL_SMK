@@ -2,11 +2,14 @@
 include_once 'config.php';
 
 // Fungsi untuk menambahkan user baru
-function tambahUser($nama_lengkap, $email, $nomor_telepon, $role)
+function tambahUser($nama_lengkap, $email, $nomor_telepon, $role, $password)
 {
     global $db;
-    $sql = "INSERT INTO users (nama_lengkap, email, nomor_telepon, role) 
-            VALUES ('$nama_lengkap', '$email', '$nomor_telepon', '$role')";
+
+    $hashed_password = md5($password);
+
+    $sql = "INSERT INTO users (nama_lengkap, email, nomor_telepon, role, password) 
+            VALUES ('$nama_lengkap', '$email', '$nomor_telepon', '$role', '$hashed_password')";
     if ($db->query($sql)) {
         header("Location: login.php");
         exit();
@@ -16,11 +19,11 @@ function tambahUser($nama_lengkap, $email, $nomor_telepon, $role)
 }
 
 // Fungsi login di functions.php
-function loginUser($nama_lengkap, $email)
+function loginUser($email, $password)
 {
     global $db;
 
-    $query = "SELECT * FROM users WHERE nama_lengkap = '$nama_lengkap' AND email = '$email'";
+    $query = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
     $result = $db->query($query);
 
     if ($result->num_rows > 0) {
@@ -39,7 +42,7 @@ function loginUser($nama_lengkap, $email)
         }
         exit();
     } else {
-        return "Email atau nomor telepon salah.";
+        return "Email atau password salah.";
     }
 }
 
@@ -148,13 +151,14 @@ function tambahLowonganPkl($perusahaan_id, $skill_yang_dibutuhkan, $jurusan, $je
 function getAllLowonganPKL()
 {
     global $db;
-    // Tambahkan kolom 'created_at' pada query
-    $sql = "SELECT l.lowongan_id, p.nama_perusahaan, l.skill_yang_dibutuhkan, l.jenjang_kontrak, l.status, l.created_at 
-    FROM lowongan_pkl l 
-    JOIN perusahaan p ON l.perusahaan_id = p.perusahaan_id";
+    // Tambahkan perusahaan_id pada query agar bisa diakses di index_perusahaan.php
+    $sql = "SELECT l.lowongan_id, p.nama_perusahaan, l.skill_yang_dibutuhkan, l.jurusan, l.jenjang_kontrak, l.status, l.created_at, l.perusahaan_id 
+            FROM lowongan_pkl l 
+            JOIN perusahaan p ON l.perusahaan_id = p.perusahaan_id";
     $result = $db->query($sql);
     return $result->fetch_all(MYSQLI_ASSOC);
 }
+
 
 
 
@@ -191,7 +195,6 @@ function getPerusahaanByLowonganId($lowongan_id)
 function updateLowongan($lowongan_id, $skill_yang_dibutuhkan, $jurusan, $jenjang_kontrak, $status)
 {
     global $db;
-    // Menggunakan query UPDATE untuk mengubah data lowongan
     $sql = "UPDATE lowongan_pkl 
             SET skill_yang_dibutuhkan = '$skill_yang_dibutuhkan', 
                 jurusan = '$jurusan', 
@@ -200,14 +203,16 @@ function updateLowongan($lowongan_id, $skill_yang_dibutuhkan, $jurusan, $jenjang
             WHERE lowongan_id = '$lowongan_id'";
 
     return $db->query($sql);
-} {
-    global $db;
-    $sql = "SELECT l.lowongan_id, p.nama_perusahaan, l.skill_yang_dibutuhkan, l.jenjang_kontrak, l.status 
-        FROM lowongan_pkl l 
-        JOIN perusahaan p ON l.perusahaan_id = p.perusahaan_id";
-
-    return $db->query($sql);
 }
+
+// {
+//     global $db;
+//     $sql = "SELECT l.lowongan_id, p.nama_perusahaan, l.skill_yang_dibutuhkan, l.jenjang_kontrak, l.status 
+//         FROM lowongan_pkl l 
+//         JOIN perusahaan p ON l.perusahaan_id = p.perusahaan_id";
+
+//     return $db->query($sql);
+// }
 
 
 function getLowonganByPerusahaanId($perusahaan_id)

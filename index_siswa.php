@@ -1,14 +1,14 @@
 <?php
+include 'functions.php';
+
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-include 'functions.php';
-
-// Mendapatkan semua lowongan PKL yang tersedia
 $lowongan_pkl = getAllLowonganPKL();
+
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +36,7 @@ $lowongan_pkl = getAllLowonganPKL();
                 <tr>
                     <th>Nama Perusahaan</th>
                     <th>Skill yang Dibutuhkan</th>
+                    <th>Jurusan</th>
                     <th>Jenjang Kontrak</th>
                     <th>Tanggal</th>
                     <th>Status</th>
@@ -47,6 +48,7 @@ $lowongan_pkl = getAllLowonganPKL();
                     <tr>
                         <td><?php echo $lowongan['nama_perusahaan']; ?></td>
                         <td><?php echo $lowongan['skill_yang_dibutuhkan']; ?></td>
+                        <td><?php echo $lowongan['jurusan']; ?></td>
                         <td><?php echo $lowongan['jenjang_kontrak']; ?></td>
                         <td><?php echo date('d-m-Y', strtotime($lowongan['created_at'])); ?></td>
                         <td><?php echo $lowongan['status'] == 'tersedia' ? 'Tersedia' : 'Ditutup'; ?></td>
